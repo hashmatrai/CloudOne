@@ -1,0 +1,75 @@
+<template>
+    <!-- Container for the entire component with padding -->
+    <div class="container slds-p-around_medium backcolor">
+
+        <!-- Title section -->
+        <div class="title slds-text-heading_large slds-text-align_center">
+            Check Public Holidays Based on Your South Africa ID Number
+        </div>
+
+        <!-- Lightning Layout to organize the input fields and button in multiple rows -->
+        <lightning-layout multiple-rows="true">
+
+            <!-- Input field for South African ID number -->
+            <lightning-layout-item class="slds-p-around_xx-small" size="12">
+                <lightning-layout>
+                    <lightning-layout-item class="slds-p-around_xx-small" size="4">
+                        <lightning-input
+                            label="Enter South African ID No."
+                            type="text"
+                            placeholder="e.g. 8001015001080"
+                            value={idNumber}
+                            onchange={handleIdNumberChange}>
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                    <!-- Search button -->
+                    <lightning-layout-item class="slds-p-around_xx-small" size="4">
+                        <div id="myBtn" style="margin-top: 5% !important; margin-left: 6%;">
+                            <lightning-button
+                                label="Search Holidays"
+                                variant="brand"
+                                onclick={handleSearch}
+                                disabled={btnDisabled}>
+                            </lightning-button>
+                        </div>
+                    </lightning-layout-item>
+
+                    <!-- Placeholder layout item -->
+                    <lightning-layout-item class="slds-p-around_xx-small" size="4">
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+
+        </lightning-layout>
+
+        <!-- Error message when the input is invalid -->
+        <template if:true={isError}>
+            <p class="slds-align_absolute-center slds-text-color_error slds-m-top_medium">
+                Please enter a valid ID. For example:
+                <br/>  Valid Id: 8001015009087
+                <br/> Invalid Id: 8001015009086
+            </p>
+        </template>
+
+        <!-- Display the public holidays data in a datatable -->
+        <template if:true={isSuccess}>
+            <lightning-datatable
+                data={publicHolidays}
+                columns={columns}
+                key-field="name"
+                show-row-number-column
+                hide-checkbox-column
+                class="slds-m-top_medium"
+                wrap-text-max-lines="2"
+            ></lightning-datatable>
+        </template>
+
+        <!-- Display a spinner when data is loading -->
+        <template if:true={isLoading}>
+            <div class="slds-spinner_container slds-var-m-top_medium">
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+        </template>
+    </div>
+</template>
