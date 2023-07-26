@@ -6,7 +6,7 @@ export default class PublicHolidaysOnMyDOB extends LightningElement {
     idNumber = '8001015001080';
     error = '';
     isError;
-    isSuccess;
+    isSuccess; 
     publicHolidays;
     isLoading=false; 
 
